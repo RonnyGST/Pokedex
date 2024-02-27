@@ -1,0 +1,56 @@
+* {/*O asterisco seleciona todos da página*/
+    font-family: 'Roboto' , sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f6f8fc;
+}
+
+a {
+    text-decoration: none;
+}
+
+.content {
+    height: 100vh;
+    width: 100vw;
+    padding: 1rem; /*Medida baseada no tamanho da fonte*/
+    background-color: #fff;
+}
+
+#pokemonList {
+    display: grid;
+    grid-template-columns: 1fr;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+@media screen and (min-width: 992px) {/*Este seria o midia query, usado para deixar o css responsivo e se ajustar de acordo ao tamanho da tela*/
+    .content {/*Quando a tela chegar aos 992px, a classe content terá o seguinte estilo*/
+        max-width: 992px;
+        height: auto;
+        margin: 1rem auto;
+        border-radius: 1rem;
+    }
+}
+
+@media screen and (min-width: 350px) {
+    #pokemonList {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media screen and (min-width: 576px) {
+    #pokemonList {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+
+@media screen and (min-width: 992px) {
+    #pokemonList {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
