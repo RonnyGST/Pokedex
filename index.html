@@ -5,6 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Pokedex</title>
+        <link rel="icon" type="image/x-icon" href="./assets/imgs/icon-128x128.png">
 
         <!--Este é o link do cdn (normalize css) para o reset css para deixar o css padrão para todos os navegadores-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" 
@@ -23,8 +24,16 @@
 
     <body>
         <section class="content">
-            <h1>Pokedex</h1>
-            <a href="pokemon.html">Poke
+            <h1 onclick="back()">Pokedex</h1>
+
+            <div id="idSelect">
+                <input type="number" placeholder="Choose Pokemon id...">
+                <button onclick="showDetail()">Show Details</button>
+            </div>
+            
+
+            <div id="pokemon-selected"></div>
+            
             <ol id="pokemonList">
                 <!--<li class="pokemon">
                     <span class="number">#001</span>
@@ -40,7 +49,7 @@
                     </div>
                 </li>-->
             </ol>
-</a>
+
             <div class="pagination">
                 <button id="loadMoreButton" type="button">
                     Load More

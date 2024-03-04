@@ -34,6 +34,11 @@ a {
         margin: 1rem auto;
         border-radius: 1rem;
     }
+
+    #loadMoreButton {
+        font-size: 1.625rem;
+        color: #fff;
+    }
 }
 
 @media screen and (min-width: 350px) {

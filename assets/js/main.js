@@ -1,10 +1,13 @@
 
-const pokemonList = document.getElementById('pokemonList');
-const loadMoreButton = document.getElementById('loadMoreButton');
+const pokemonList = document.getElementById('pokemonList');//Elemento pai (ol) de todos os elementos pokemon lista
+const loadMoreButton = document.getElementById('loadMoreButton');//Botão de carregar mais pokemons
+const pokemonSelected = document.getElementById('pokemon-selected');//Elemento pai da div de detalhes de pokemon
+const idSelect = document.getElementById('idSelect');//Div com um botão e input que determina qual pokemon que você deseja ver os detalhes
 
 const maxRecords = 1080;//Máximo de pokemons que podemos ter
-const limit = 20;//Quantidade de pokemons que aparece por vez
+let limit = 20;//Quantidade de pokemons que aparece por vez
 let offset = 0;
+let id = 0;
 
 
 //FUNÇÃO PARA CRIAR NOVOS POKEMONS
@@ -27,7 +30,6 @@ function loadPokemonItens(offset, limit){
         Essa conversão consiste no retorno de uma string que possui o formato html.
         Depois junto tudo com o método join()*/
         pokemonList.innerHTML += pokemons.map((pokemon) => `
-        <a href="pokemon.html" target="_blank">
             <li class="pokemon ${pokemon.type}">
                 <span class="number">#${pokemon.number}</span>
                 <span class="name">${pokemon.name}</span>
@@ -41,7 +43,6 @@ function loadPokemonItens(offset, limit){
                     alt="${pokemon.name}">
                 </div>
             </li>
-        </a>
         `).join('');
     })
 }
@@ -66,3 +67,65 @@ loadMoreButton.addEventListener('click', () => {
 })
 
     
+
+//Mostra os detalhes do pokemon selecionado
+function showDetail(offset, limit){
+    pokemonList.style.display = "none";
+    loadMoreButton.style.display = "none";
+    pokemonSelected.style.display = "grid";
+    idSelect.style.display = "none";
+
+    document.querySelector('h1').innerHTML = "<<";
+
+    let chooseIdPokemon = idSelect.value
+
+    limit = 1;
+    id = chooseIdPokemon
+    offset = id - 1;
+
+    if(id >= 1 && id <= maxRecords) {
+        pokeApi.getPokemons(offset, limit).then((pokemons = []) => {//Aparentemente posso pegar objetos de outros arquivos livremente e usar seus métodos
+            pokeId = pokemons.map((myPoke) => myPoke.number)
+
+            //pokemons.map((detail) => console.log(detail.number))
+
+            pokemonSelected.innerHTML += pokemons.map((pokemon) => `
+                <div class="pokemon ${pokemon.type}">
+                    <span class="number">#${pokemon.number}</span>
+                    <span class="name">${pokemon.name}</span>
+                
+                    <div class="detail">
+                        <ol class="types">
+                            ${pokemon.types.map((type) => `<li class="type ${type}">${type}</li>`).join('')}         
+                        </ol>
+                
+                        <img src="${pokemon.photo}" 
+                        alt="${pokemon.name}">
+                    </div>
+                </div>
+            `);
+        })
+    } else {
+        pokemonSelected.innerHTML = `
+            <div>
+                <h1>Error 404</h1>
+                <h3>Pokemon not found</h3>
+                <img src="./assets/imgs/pokemon_sad.jpeg" alt="Pikachu triste">
+            </div>
+        `
+    }
+    
+
+}
+
+
+
+
+function back(){
+    loadMoreButton.style.display = "grid";
+    pokemonList.style.display = "grid";
+    idSelect.style.display = "inline";
+
+    pokemonSelected.innerHTML = "";
+    document.querySelector('h1').innerHTML = "Pokedex";
+}
