@@ -2,7 +2,7 @@
     background-color: #a6a877;
 }
 .grass {
-    background-color: #77c850;
+    background-color: #45CEAF;
 }
 .fire {
     background-color: #ee7f30;
@@ -98,6 +98,7 @@
     /*Este atributo brightness() controla o brilho do elemento, onde 1 é normal e nesse caso 1.1 seria para brilhar 10% a mais*/
     filter: brightness(1.1);
     text-align: center;
+    text-transform: capitalize;
 }
 
 .pokemon .detail img{

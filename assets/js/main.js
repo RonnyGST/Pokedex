@@ -2,7 +2,11 @@
 const pokemonList = document.getElementById('pokemonList');//Elemento pai (ol) de todos os elementos pokemon lista
 const loadMoreButton = document.getElementById('loadMoreButton');//Botão de carregar mais pokemons
 const pokemonSelected = document.getElementById('pokemon-selected');//Elemento pai da div de detalhes de pokemon
-const idSelect = document.getElementById('idSelect');//Div com um botão e input que determina qual pokemon que você deseja ver os detalhes
+const idSelectContainer = document.getElementById('idSelect__container');//Div com um botão e input que determina qual pokemon que você deseja ver os detalhes
+const idSelect = document.getElementById('idSelect');//Input de seleção do id do pokemon
+const contentDetail = document.getElementById('contentDetail');//Elemento que só existe na shadow DOM na tela de detalhes do pokemon. Este campo mostra os detalhes do pokemon.
+const about = document.getElementById('about');
+const p = document.getElementById('title')
 
 const maxRecords = 1080;//Máximo de pokemons que podemos ter
 let limit = 20;//Quantidade de pokemons que aparece por vez
@@ -73,14 +77,14 @@ function showDetail(offset, limit){
     pokemonList.style.display = "none";
     loadMoreButton.style.display = "none";
     pokemonSelected.style.display = "grid";
-    idSelect.style.display = "none";
+    idSelectContainer.style.display = "none";
+    p.style.cursor = "pointer";
+    p.innerHTML = `<img src="./assets/imgs/arrow.png">`;
+    document.querySelector('hr').style.display = "block";
 
-    document.querySelector('h1').innerHTML = "<<";
-
-    let chooseIdPokemon = idSelect.value
 
     limit = 1;
-    id = chooseIdPokemon
+    id = idSelect.value
     offset = id - 1;
 
     if(id >= 1 && id <= maxRecords) {
@@ -90,18 +94,24 @@ function showDetail(offset, limit){
             //pokemons.map((detail) => console.log(detail.number))
 
             pokemonSelected.innerHTML += pokemons.map((pokemon) => `
-                <div class="pokemon ${pokemon.type}">
-                    <span class="number">#${pokemon.number}</span>
-                    <span class="name">${pokemon.name}</span>
+                <div class="pokemonDetail ${pokemon.type}">
+                    <span class="nameDetail">${pokemon.name}</span>
+                    <span class="numberDetail">#${pokemon.number}</span>
                 
-                    <div class="detail">
-                        <ol class="types">
-                            ${pokemon.types.map((type) => `<li class="type ${type}">${type}</li>`).join('')}         
+                    <div class="detailPokemon">
+                        <ol class="typesDetail">
+                            ${pokemon.types.map((type) => `<li class="typeDetail ${type}">${type}</li>`).join('')}         
                         </ol>
                 
                         <img src="${pokemon.photo}" 
                         alt="${pokemon.name}">
                     </div>
+                </div>
+
+                <div id="btnEvents">
+                    <span onclick="showAbout()" id="about">About</span>
+                    <span onclick="showBaseStats()" id="stats">Base Stats</span>
+                    <span onclick="showMoves()" id="moves">Moves</span>
                 </div>
             `);
         })
@@ -113,10 +123,73 @@ function showDetail(offset, limit){
                 <img src="./assets/imgs/pokemon_sad.jpeg" alt="Pikachu triste">
             </div>
         `
+        document.querySelector('hr').style.display = "none";
     }
-    
+}
+
+
+function showAbout(){
+    contentDetail.innerHTML = `
+        <div class="attribute">
+            <span class="spanHeight">Height</span>
+            <span>Weight</span>
+            <span>Abilities</span>
+        </div>
+
+
+        <div class="value">
+            <span class="spanValue">Valor exemplo</span>
+            <span class="spanValue">Valor exemplo</span>
+            <span class="spanValue">Valor exemplo</span>
+        </div>
+    `
+    document.querySelector('hr').style.margin = "0 74% 0 9%"
+}
+
+
+function showBaseStats(){
+    contentDetail.innerHTML = `
+        <div class="attribute">
+            <span>HP</span>
+            <span>Attack</span>
+            <span>Defense</span>
+            <span>Sp.Atk</span>
+            <span>Sp.Def</span>
+            <span>Speed</span>
+            <span>Total</span>
+        </div>
+
+
+        <div class="value">
+            <span class="attValue">00</span>
+            <span class="attValue">00</span>
+            <span class="attValue">00</span>
+            <span class="attValue">00</span>
+            <span class="attValue">00</span>
+            <span class="attValue">00</span>
+            <span class="attValue">00</span>
+        </div>
+
+
+        <div class="horizontalBar">
+            <span>bar range</span>
+            <span>bar range</span>
+            <span>bar range</span>
+            <span>bar range</span>
+            <span>bar range</span>
+            <span>bar range</span>
+            <span>bar range</span>
+        </div>
+    `
+    document.querySelector('hr').style.margin = "0 35%"
+}
+
+
+function showMoves(){
 
 }
+
+
 
 
 
@@ -124,8 +197,13 @@ function showDetail(offset, limit){
 function back(){
     loadMoreButton.style.display = "grid";
     pokemonList.style.display = "grid";
-    idSelect.style.display = "inline";
-
+    idSelectContainer.style.display = "inline";
+    contentDetail.innerHTML = "";
+    p.style.cursor = "default";
     pokemonSelected.innerHTML = "";
-    document.querySelector('h1').innerHTML = "Pokedex";
+    p.innerHTML = "Pokedex";
+
+    document.querySelector('hr').style.display = "none";
 }
+
+document.querySelector('hr').style.display = "none";

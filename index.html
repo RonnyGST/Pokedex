@@ -20,19 +20,24 @@
         <!--Meu arquivo css-->
         <link rel="stylesheet" href="./assets/css/global.css">
         <link rel="stylesheet" href="./assets/css/pokedex.css">
+        <link rel="stylesheet" href="./assets/css/pokemon-detail.css">
     </head>
 
     <body>
         <section class="content">
-            <h1 onclick="back()">Pokedex</h1>
+            <div onclick="back()" id="title">
+                Pokedex
+            </div>
 
-            <div id="idSelect">
-                <input type="number" placeholder="Choose Pokemon id...">
+            <div id="idSelect__container">
+                <input type="number" id="idSelect" placeholder="Choose Pokemon id...">
                 <button onclick="showDetail()">Show Details</button>
             </div>
             
 
             <div id="pokemon-selected"></div>
+            <hr>
+            <div id="contentDetail"></div>
             
             <ol id="pokemonList">
                 <!--<li class="pokemon">
